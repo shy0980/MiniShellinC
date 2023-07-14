@@ -93,7 +93,7 @@ int shysh_exec(char **args) {
 char *shysh_read_line(void) {
     int bSize = MS;
     int position = 0;
-    char *buffer = malloc(bSize * sizeof(char));
+    char *buffer = (char*)malloc(bSize * sizeof(char));
     int c;
 
     if(!buffer) {
@@ -115,7 +115,7 @@ char *shysh_read_line(void) {
 
         if(position>= bSize) {
             bSize+=MS;
-            buffer = realloc(buffer,bSize);
+            buffer = (char*)realloc(buffer,bSize);
             if(!buffer) {
                 fprintf(stderr, "shysh: cannot allocate memory |-ERROR-|");
                 exit(EXIT_FAILURE);
@@ -128,7 +128,7 @@ char *shysh_read_line(void) {
 #define SHYSH_TOK_DELIM " \t\r\n\a"
 char **shysh_split_line(char *line) {
     int bSize = SHYSH_TOK_BSIZE, position = 0;
-    char **tokens = malloc(bSize * sizeof(char*));
+    char **tokens = (char**)malloc(bSize * sizeof(char*));
     char *token;
 
     if(!tokens) {
@@ -143,7 +143,7 @@ char **shysh_split_line(char *line) {
 
         if(position >= bSize) {
             bSize+=SHYSH_TOK_BSIZE;
-            tokens = realloc(tokens, bSize * sizeof(char*));
+            tokens = (char**)realloc(tokens, bSize * sizeof(char*));
 
             if(!token) {
                 printError();
